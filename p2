@@ -1,0 +1,114 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+class Hotel {
+protected:
+    string hotelName;
+    string hotelType;
+    string city;
+    float hotelRate;
+public:
+    void inputHotelDetails() {
+        cout << "Enter Hotel Name: "; cin >> hotelName;
+        cout << "Enter Hotel Type (Three star/Five star): "; cin >> hotelType;
+        cout << "Enter Hotel City: "; cin >> city;
+        cout << "Enter Hotel Rate: "; cin >> hotelRate;
+    }
+
+    void displayHotelDetails() const {
+cout << "Hotel Name: " << hotelName << "\nHotel Type: " << hotelType<< "\nHotel City: " << city << "\nHotel Rate: " << hotelRate << endl;
+    }
+};
+
+class Flight {
+protected:
+    string flightNo;
+    string sourceCity;
+    string destinationCity;
+    int seatNo;
+public:
+    void inputFlightDetails() {
+        cout << "Enter Flight Number: "; cin >> flightNo;
+        cout << "Enter Source City: "; cin >> sourceCity;
+        cout << "Enter Destination City: "; cin >> destinationCity;
+        cout << "Enter Seat Number: "; cin >> seatNo;
+    }
+
+    void displayFlightDetails() const {
+    cout<<"Flight No:"<<flightNo <<"\nSource City:"<<sourceCity<<"\nDestination City:"<<destinationCity<<"\nSeat No:"<< seatNo << endl;
+    }
+
+    string getFlightNo() const { return flightNo; }
+};
+
+class Passenger : public Hotel, public Flight {
+private:
+    string name;
+    int age;
+    string passengerCity;
+public:
+    void inputPassengerDetails() {
+        cout << "Enter Passenger Name: "; cin >> name;
+        cout << "Enter Passenger Age: "; cin >> age;
+        cout << "Enter Passenger City: "; cin >> passengerCity;
+        inputHotelDetails();
+        inputFlightDetails();
+    }
+
+    void displayPassengerDetails() const {
+        cout << "\nPassenger Name: " << name << "\nAge: " << age<< "\nPassenger City: " << passengerCity << endl;
+        displayHotelDetails();
+        displayFlightDetails();
+    }
+
+    string getPassengerFlightNo() const { return getFlightNo(); }
+};
+
+int main() {
+    vector<Passenger>passengers;
+    int choice;
+
+    do {
+ cout<< "\nMenu:\n1.Input Passenger Details\n2.Display All Passengers\n3.Display Passengers by Flight\n4.Exit\nEnter your choice:";
+cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                Passenger p;
+                p.inputPassengerDetails();
+                passengers.push_back(p);
+                cout << "Passenger details added successfully.\n";
+                break;
+            }
+            case 2: {
+                if (passengers.empty()) cout<< "No passenger records available.\n";
+                else {
+                    for (auto p : passengers){
+                        p.displayPassengerDetails();
+                    }             
+                }
+                break;
+            }
+            case 3: {
+                string flightNo;
+                cout << "Enter Flight Number to search: ";
+                cin >> flightNo;
+                bool found = false;
+                for ( auto p : passengers) {
+                    if (p.getPassengerFlightNo()==flightNo) {
+                        p.displayPassengerDetails();
+                        found = true;
+                    }
+                }
+                if (!found) cout << "No passengers found for flight " << flightNo << ".\n";
+                break;
+            }
+            case 4:
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice! Please try again.\n";
+        }
+    } while (choice != 4);
+    return 0;
+}
