@@ -1,0 +1,74 @@
+import java.util.Scanner;
+abstract class Shape {
+    double d1, d2;
+    Shape(double d1, double d2) {
+        this.d1 = d1;
+        this.d2 = d2;
+    }
+    abstract void area();
+}
+
+class Rectangle extends Shape {
+    Rectangle(double length, double width) {
+        super(length, width);
+    }
+
+    @Override
+    void area() {
+        System.out.println("Area of Rectangle: " + (d1 * d2));
+    }
+}
+
+class Circle extends Shape {
+    Circle(double radius) {
+        super(radius, 0);
+    }
+
+    @Override
+    void area() {
+        System.out.println("Area of Circle: " + (Math.PI * d1 * d1));
+    }
+}
+
+public class practice{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Area of Rectangle");
+            System.out.println("2. Area of Circle");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter length: ");
+                    double length = sc.nextDouble();
+                    System.out.print("Enter width: ");
+                    double width = sc.nextDouble();
+                    Shape rectangle = new Rectangle(length, width);
+                    rectangle.area();
+                    break;
+
+                case 2:
+                    System.out.print("Enter radius: ");
+                    double radius = sc.nextDouble();
+                    Shape circle = new Circle(radius);
+                    circle.area();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting program.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 3);
+
+        sc.close();
+    }
+}
