@@ -1,0 +1,73 @@
+
+
+#include <bits/stdc++.h>
+using namespace std;
+class Matrix {
+private:
+    int data[2][2];
+public:
+    Matrix(int a = 0, int b = 0, int c = 0, int d = 0) {
+        data[0][0] = a; data[0][1] = b;
+        data[1][0] = c; data[1][1] = d;
+    }
+
+    void display() const {
+        for (int i = 0; i < 2; ++i) {
+            for (int j = 0; j < 2; ++j) {
+                cout << data[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    Matrix& operator++() {
+        for (int i = 0; i < 2; ++i)
+            for (int j = 0; j < 2; ++j)
+                ++data[i][j];
+        return *this;
+    }
+
+    Matrix operator++(int) {
+        Matrix temp = *this;
+        ++(*this); 
+        return temp;
+    }
+
+    Matrix& operator--() {
+        for (int i = 0; i < 2; ++i)
+            for (int j = 0; j < 2; ++j)
+                --data[i][j];
+        return *this;
+    }
+
+    Matrix operator--(int) {
+        Matrix temp = *this;
+        --(*this); 
+        return temp;
+    }
+};
+
+int main() {
+    Matrix mat(1, 2, 3, 4);
+
+    cout << "Original Matrix:\n";
+    mat.display();
+
+    cout << "\nAfter Pre-increment:\n";
+    ++mat;
+    mat.display();
+
+    cout << "\nAfter Post-increment:\n";
+    mat++;  
+    mat.display();
+
+    cout << "\nAfter Pre-decrement:\n";
+    --mat;
+    mat.display();
+
+    cout << "\nAfter Post-decrement:\n";
+    mat--;
+    mat.display();
+
+    return 0;
+}
